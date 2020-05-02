@@ -53,15 +53,15 @@
                         <a href="https://github.com/dhirajbadu/spring_boot_skeleton/tree/master/src/main/java/com/realestate/re/service">service</a>
                            <ul>
                             <li>
-                            <a href="https://github.com/dhirajbadu/spring_boot_skeleton/tree/master/src/main/java/com/realestate/re/common">common</a><br>
+                            <a href="https://github.com/dhirajbadu/spring_boot_skeleton/tree/master/src/main/java/com/realestate/re/service/common">common</a><br>
                             <i>All the classes which are used multiple times in other class, means common classes</i>
                             </li>
                             <li>
-                            <a href="https://github.com/dhirajbadu/spring_boot_skeleton/tree/master/src/main/java/com/realestate/re/core">core</a><br>
+                            <a href="https://github.com/dhirajbadu/spring_boot_skeleton/tree/master/src/main/java/com/realestate/re/service/core">core</a><br>
                             <i>All the classes which contains core business logics</i>
                             </li>
                             <li>
-                            <a href="https://github.com/dhirajbadu/spring_boot_skeleton/tree/master/src/main/java/com/realestate/re/web">web</a><br>
+                            <a href="https://github.com/dhirajbadu/spring_boot_skeleton/tree/master/src/main/java/com/realestate/re/service/web">web</a><br>
                             <i>Controller, session, RestFull Api, etc</i>
                             </li>
                            </ul>
