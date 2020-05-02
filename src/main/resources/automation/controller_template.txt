@@ -40,7 +40,7 @@ public class {entityname}Controller {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("{L-entityname}") {entityname}Dto {L-entityname}Dto, BindingResult bindingResult, ModelMap map, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute("{L-entityname}") {entityname}Dto {L-entityname}Dto, BindingResult bindingResult, ModelMap map, RedirectAttributes redirectAttributes)throws Exception {
 
         try {
 
@@ -70,7 +70,7 @@ public class {entityname}Controller {
     }
 
     @GetMapping("/edit/{{L-entityname}Id}")
-    public String edit(@PathVariable("{L-entityname}Id") Long {L-entityname}Id, ModelMap map, RedirectAttributes redirectAttributes) {
+    public String edit(@PathVariable("{L-entityname}Id") Long {L-entityname}Id, ModelMap map, RedirectAttributes redirectAttributes)throws Exception {
         try {
 
             if ({L-entityname}Id == null){
@@ -98,7 +98,7 @@ public class {entityname}Controller {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("{L-entityname}") {entityname}Dto {L-entityname}Dto, BindingResult bindingResult, ModelMap map, RedirectAttributes redirectAttributes) {
+    public String update(@ModelAttribute("{L-entityname}") {entityname}Dto {L-entityname}Dto, BindingResult bindingResult, ModelMap map, RedirectAttributes redirectAttributes) throws Exception {
 
         try {
             synchronized (this.getClass()) {
@@ -132,7 +132,7 @@ public class {entityname}Controller {
     }
 
     @GetMapping("/delete/{{L-entityname}Id}")
-    public String delete(@PathVariable("{L-entityname}Id") Long {L-entityname}Id, @RequestParam("version")Integer version , RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable("{L-entityname}Id") Long {L-entityname}Id, @RequestParam("version")Integer version , RedirectAttributes redirectAttributes)throws Exception {
 
         try {
 

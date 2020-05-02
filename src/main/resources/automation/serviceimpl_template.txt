@@ -1,5 +1,6 @@
 package com.realestate.re.service.core.{packagename};
 
+import com.realestate.re.service.common.utls.LoggerUtil;
 import com.realestate.re.service.common.enums.Status;
 import com.realestate.re.service.common.utls.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
