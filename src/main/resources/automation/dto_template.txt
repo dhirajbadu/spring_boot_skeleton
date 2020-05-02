@@ -1,0 +1,9 @@
+package com.realestate.re.service.core.{packagename};
+
+import com.realestate.re.service.common.abstracts.AbstractDto;
+import com.realestate.re.service.common.enums.Status;
+
+public class {entityname}Dto extends AbstractDto{
+
+
+}

@@ -1,0 +1,156 @@
+package com.realestate.re.service.web.controller;
+
+import com.realestate.re.service.common.constants.StringConstants;
+import com.realestate.re.service.common.enums.Status;
+import com.realestate.re.service.common.utls.LoggerUtil;
+import com.realestate.re.service.core.{packagename}.{entityname}Dto;
+import com.realestate.re.service.core.{packagename}.{entityname}Error;
+import com.realestate.re.service.core.{packagename}.{entityname}Service;
+import com.realestate.re.service.core.{packagename}.{entityname}Validation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+@RequestMapping("/{L-entityname}")
+public class {entityname}Controller {
+
+    @Autowired
+    private {entityname}Service {L-entityname}Service;
+
+    @Autowired
+    private {entityname}Validation {L-entityname}Validation;
+
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/{L-entityname}/list";
+    }
+
+    @GetMapping("/list")
+    public String list() {
+        return "/{L-entityname}/list";
+    }
+
+    @GetMapping("/add")
+    public String add() {
+        return "/{L-entityname}/add";
+    }
+
+    @PostMapping("/save")
+    public String save(@ModelAttribute("{L-entityname}") {entityname}Dto {L-entityname}Dto, BindingResult bindingResult, ModelMap map, RedirectAttributes redirectAttributes) {
+
+        try {
+
+            synchronized (this.getClass()) {
+
+                if ({L-entityname}Dto == null) {
+                    redirectAttributes.addFlashAttribute(StringConstants.ERROR, "please fill the form properly");
+                    return "redirect:/{L-entityname}/add";
+                }
+
+                {entityname}Error {L-entityname}Error = {L-entityname}Validation.onSave({L-entityname}Dto, bindingResult);
+                if (!{L-entityname}Error.isValid()) {
+                    map.put(StringConstants.{U-entityname}, {L-entityname}Dto);
+                    map.put(StringConstants.{U-entityname}_ERROR, {L-entityname}Error);
+                    return "/{L-entityname}/add";
+                }
+
+                {L-entityname}Service.save({L-entityname}Dto);
+                redirectAttributes.addFlashAttribute(StringConstants.MESSAGE, "{L-entityname} saved successfully");
+            }
+        } catch (Exception ex) {
+            LoggerUtil.logException(this.getClass(), ex);
+            throw ex;
+        }
+
+        return "redirect:/{L-entityname}/list";
+    }
+
+    @GetMapping("/edit/{{L-entityname}Id}")
+    public String edit(@PathVariable("{L-entityname}Id") Long {L-entityname}Id, ModelMap map, RedirectAttributes redirectAttributes) {
+        try {
+
+            if ({L-entityname}Id == null){
+                redirectAttributes.addFlashAttribute(StringConstants.ERROR , "bad request");
+                return "redirect:/{L-entityname}/list";
+            }
+
+            if ({L-entityname}Id < 1){
+                redirectAttributes.addFlashAttribute(StringConstants.ERROR , "bad request");
+                return "redirect:/{L-entityname}/list";
+            }
+
+            {entityname}Dto {L-entityname}Dto = {L-entityname}Service.show({L-entityname}Id , Status.ACTIVE);
+
+            if ({L-entityname}Dto == null){
+                redirectAttributes.addFlashAttribute(StringConstants.ERROR , "requested record not found");
+                return "redirect:/{L-entityname}/list";
+            }
+            map.put(StringConstants.{U-entityname} , {L-entityname}Dto);
+        } catch (Exception ex) {
+            LoggerUtil.logException(this.getClass(), ex);
+            throw ex;
+        }
+        return "/{L-entityname}/edit";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute("{L-entityname}") {entityname}Dto {L-entityname}Dto, BindingResult bindingResult, ModelMap map, RedirectAttributes redirectAttributes) {
+
+        try {
+            synchronized (this.getClass()) {
+
+                if ({L-entityname}Dto == null) {
+                    redirectAttributes.addFlashAttribute(StringConstants.ERROR, "please fill the form properly");
+                    return "redirect:/{L-entityname}/list";
+                }
+
+                {entityname}Error {L-entityname}Error = {L-entityname}Validation.onUpdate({L-entityname}Dto, bindingResult);
+                if (!{L-entityname}Error.isValid()) {
+                    if ({L-entityname}Error.isVersionUnmatched()){
+                        redirectAttributes.addFlashAttribute(StringConstants.ERROR , {L-entityname}Error.getMessage());
+                        return "redirect:/{L-entityname}/edit/"+{L-entityname}Dto.getId();
+                    }
+
+                    map.put(StringConstants.{U-entityname}, {L-entityname}Dto);
+                    map.put(StringConstants.{U-entityname}_ERROR, {L-entityname}Error);
+                    return "/{L-entityname}/edit";
+                }
+
+                {L-entityname}Service.update({L-entityname}Dto);
+                redirectAttributes.addFlashAttribute(StringConstants.MESSAGE, "{L-entityname} updated successfully");
+            }
+        } catch (Exception ex) {
+            LoggerUtil.logException(this.getClass(), ex);
+            throw ex;
+        }
+
+        return "redirect:/{L-entityname}/list";
+    }
+
+    @GetMapping("/delete/{{L-entityname}Id}")
+    public String delete(@PathVariable("{L-entityname}Id") Long {L-entityname}Id, @RequestParam("version")Integer version , RedirectAttributes redirectAttributes) {
+
+        try {
+
+            synchronized (this.getClass()){
+                {entityname}Error {L-entityname}Error = {L-entityname}Validation.onDelete({L-entityname}Id , version);
+                if (!{L-entityname}Error.isValid()){
+                    redirectAttributes.addFlashAttribute(StringConstants.ERROR , {L-entityname}Error.getMessage());
+                    return "redirect:/{L-entityname}/list";
+                }
+
+                {L-entityname}Service.delete({L-entityname}Id);
+                redirectAttributes.addFlashAttribute(StringConstants.MESSAGE , "{L-entityname} deleted successfully");
+            }
+        } catch (Exception ex) {
+            LoggerUtil.logException(this.getClass(), ex);
+            throw ex;
+        }
+
+        return "redirect:/{L-entityname}/list";
+    }
+}

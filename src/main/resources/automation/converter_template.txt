@@ -1,0 +1,66 @@
+package com.realestate.re.service.core.{packagename};
+
+import com.realestate.re.service.common.abstracts.ConverterBase;
+import com.realestate.re.service.common.enums.Status;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class {entityname}Converter extends ConverterBase<{entityname} , {entityname}Dto>{
+
+    @Override
+    public {entityname} convertToEntity({entityname}Dto dto) {
+        
+        if (dto == null){
+            return null;
+        }
+       {entityname} entity = copyConvertToEntity(dto , new {entityname}());
+
+       entity.setStatus(Status.ACTIVE);
+
+        return entity;
+    }
+
+    @Override
+    public {entityname}Dto convertToDto({entityname} entity) {
+        if (entity == null){
+            return null;
+        }
+
+        {entityname}Dto dto = new {entityname}Dto();
+
+        dto.setCreated(entity.getCreated());
+        dto.setLastModified(entity.getLastModified());
+        dto.setVersion(entity.getVersion());
+        dto.setId(entity.getId());
+
+        //write your code
+        return dto;
+    }
+
+    @Override
+    public {entityname} copyConvertToEntity({entityname}Dto dto, {entityname} entity) {
+        
+        if (entity == null || dto == null){
+            return null;
+        }
+        //write your code
+        return super.copyConvertToEntity(dto, entity);
+    }
+
+    @Override
+    public List<{entityname}Dto> convertToDtoList(List<{entityname}> entities) {
+        return super.convertToDtoList(entities);
+    }
+
+    @Override
+    public List<{entityname}> convertToEntityList(List<{entityname}Dto> dtoList) {
+        return super.convertToEntityList(dtoList);
+    }
+
+    @Override
+    public List<{entityname}Dto> convertPageToDtoList(Page<{entityname}> entities) {
+        return super.convertPageToDtoList(entities);
+    }
+}

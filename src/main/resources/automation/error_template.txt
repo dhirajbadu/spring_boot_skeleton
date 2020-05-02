@@ -1,0 +1,7 @@
+package com.realestate.re.service.core.{packagename};
+
+import com.realestate.re.service.common.abstracts.AbstractError;
+
+public class {entityname}Error extends AbstractError {
+
+}

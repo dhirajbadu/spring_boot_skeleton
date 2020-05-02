@@ -1,0 +1,10 @@
+package com.realestate.re.service.core.{packagename};
+
+import com.realestate.re.service.common.abstracts.AbstractFilterDto;
+
+public class {entityname}Filter extends AbstractFilterDto{
+
+    public {entityname}Filter(){
+        super.setClass(this.getClass());
+    }
+}

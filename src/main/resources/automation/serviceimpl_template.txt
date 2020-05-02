@@ -1,0 +1,85 @@
+package com.realestate.re.service.core.{packagename};
+
+import com.realestate.re.service.common.enums.Status;
+import com.realestate.re.service.common.utls.ConvertUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class {entityname}ServiceImpl implements {entityname}Service{
+
+    @Autowired
+    private {entityname}Repository {K-entityname}Repository;
+
+    @Autowired
+    private {entityname}Converter {K-entityname}Converter;
+
+    @Override
+    public {entityname}Dto save({entityname}Dto dto) {
+        try {
+            return {K-entityname}Converter.convertToDto({K-entityname}Repository.save({K-entityname}Converter.convertToEntity(dto)));
+        }catch (Exception e){
+             LoggerUtil.logException(this.getClass() , e);
+             throw e;
+        }
+    }
+
+    @Override
+    public {entityname}Dto update({entityname}Dto dto) {
+        try {
+            {entityname} {K-entityname} = {K-entityname}Repository.findById((long) dto.getId());
+            {K-entityname} = {K-entityname}Converter.copyConvertToEntity(dto , {K-entityname});
+            {K-entityname} = {K-entityname}Repository.save({K-entityname});
+            return {K-entityname}Converter.convertToDto({K-entityname});
+
+        }catch (Exception e){
+             LoggerUtil.logException(this.getClass() , e);
+             throw e;
+        }
+    }
+
+    @Override
+    public {entityname}Dto show(long id , Status status) {
+        try {
+            return {K-entityname}Converter.convertToDto({K-entityname}Repository.findByStatusAndId(status , id));
+        }catch (Exception e){
+             LoggerUtil.logException(this.getClass() , e);
+             throw e;
+        }
+    }
+
+    @Override
+    public void delete(long id) {
+        try {
+            {entityname} {K-entityname} = {K-entityname}Repository.findById(id);
+            {K-entityname}.setStatus(Status.INACTIVE);
+            {K-entityname}Repository.save({K-entityname});
+
+        }catch (Exception e){
+             LoggerUtil.logException(this.getClass() , e);
+             throw e;
+        }
+    }
+
+    @Override
+    public List<{entityname}Dto> listOffsetBased(List<Status> statusList, Integer max, Integer offset, String direction, String property) {
+        property = ConvertUtil.getValidProperty(property, ConvertUtil.getField({entityname}.class));
+        Pageable pageable = ConvertUtil.createOffsetPageRequest(max, offset, direction, property);
+        return {K-entityname}Converter.convertToDtoList({K-entityname}Repository.findAllByStatusIn(statusList, pageable));
+    }
+
+    @Override
+    public List<{entityname}Dto> listPageBased(List<Status> statusList, Integer page, Integer size, String property, String direction) {
+        property = ConvertUtil.getValidProperty(property, ConvertUtil.getField({entityname}.class));
+        Pageable pageable = ConvertUtil.createPageRequest(page, size, property, direction);
+        return {K-entityname}Converter.convertToDtoList({K-entityname}Repository.findAllByStatusIn(statusList, pageable));
+    }
+
+    @Override
+    public long countByStatus(List<Status> statusList) {
+        return {K-entityname}Repository.countAllByStatusIn(statusList);
+    }
+}

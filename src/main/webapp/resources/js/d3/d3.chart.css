@@ -1,0 +1,20 @@
+#chart rect{
+    height: 40px;
+}
+
+#chart text{
+    font-size: 2em;
+}
+
+#chart .domain{
+    color: #0c0c0c;
+}
+
+#chart rect:hover{
+    fill: teal;
+}
+
+
+#chart1{
+    overflow-y: scroll !important;
+}
